@@ -2,4 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('admin/category','Admin\CategoryController@index');
+Route::group(['prefix'=>"admin","namespace"=>"Admin"],function (){
+    Route::resource('/category','CategoryController');
+});
+
