@@ -4,6 +4,7 @@
             create category
         </template>
         <template slot="body">
+            <inertia-link href="/admin/category/" class="btn btn-primary btn-sm mb-2"><i class="fas fa-list-dots mr-2"></i>All Categories</inertia-link>
             <form @submit.prevent="store">
                 <div class="form-group">
                     <label for="name" class="font-weight-700">Category Name</label>

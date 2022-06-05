@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
@@ -71,7 +72,12 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $cat = Category::findOrFail($id);
+        if (!$cat){
+            return  redirect()->back()->with('error','Category not found');
+        }
+
+        return Inertia::render('Admin/Category/Edit',['cat' => $cat]);
     }
 
     /**
@@ -83,7 +89,18 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $slug = uniqid().Str::slug($request->name);
+
+        $request->validate([
+            "name" => "required",
+        ]);
+
+        Category::findOrFail($id)->update([
+            "name" => $request->name,
+            "slug" => $slug
+        ]);
+
+        return redirect()->back()->with('success','Category is updated');
     }
 
     /**
@@ -94,6 +111,8 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Category::where('id',$id)->delete();
+
+        return redirect()->back()->with('success','Category is deleted!');
     }
 }

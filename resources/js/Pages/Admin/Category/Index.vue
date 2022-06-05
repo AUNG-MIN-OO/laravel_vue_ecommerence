@@ -4,6 +4,7 @@
             all categories
         </template>
         <template slot="body">
+            <inertia-link href="/admin/category/create"  class="btn btn-primary btn-sm mb-2"><i class="fas fa-plus-circle mr-2"></i>Create Category</inertia-link>
             <table class="table table-striped table-dark table-hover">
                 <thead>
                 <tr>
@@ -15,8 +16,8 @@
                 <tr v-for="c in cat.data">
                     <td class="text-capitalize">{{ c.name }}</td>
                     <td>
-                        <inertia-link class="btn btn-sm btn-warning">Edit</inertia-link>
-                        <inertia-link class="btn btn-sm btn-danger">Delete</inertia-link>
+                        <inertia-link :href="`/admin/category/${c.id}/edit`" class="btn btn-sm btn-warning">Edit</inertia-link>
+                        <span @click="destroy(c.id)" class="btn btn-sm btn-danger">Delete</span>
                     </td>
                 </tr>
                 </tbody>
@@ -32,7 +33,15 @@ import Pagination from "../../Share/Pagination";
 export default {
 name: "Index",
     props : {cat : Object},
-    components: {Pagination, Master}
+    components: {Pagination, Master},
+    methods : {
+        destroy(id){
+            if (confirm('Are you sure to delete?')){
+                const data = {id, _method : "DELETE"};
+                this.$inertia.delete("/admin/category/" + id, data);
+            }
+        }
+    },
 }
 </script>
 

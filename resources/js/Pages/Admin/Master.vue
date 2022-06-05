@@ -5,26 +5,26 @@
                 <div class="card">
                     <div class="card-body">
                         <ul class="list-group">
-                            <a>
+                            <inertia-link href="#">
                                 <li class="list-group-item bg-primary text-white">
                                     Admin Management
                                 </li>
-                            </a>
-                            <a>
+                            </inertia-link>
+                            <inertia-link href="/admin/category">
                                 <li class="list-group-item">
                                     Category
                                 </li>
-                            </a>
-                            <a>
+                            </inertia-link>
+                            <inertia-link href="/admin/product">
                                 <li class="list-group-item">
                                     Product
                                 </li>
-                            </a>
-                            <a>
+                            </inertia-link>
+                            <inertia-link href="/admin/order">
                                 <li class="list-group-item">
                                     Order
                                 </li>
-                            </a>
+                            </inertia-link>
                         </ul>
                     </div>
                 </div>
