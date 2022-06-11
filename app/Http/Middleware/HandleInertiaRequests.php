@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -46,6 +47,9 @@ class HandleInertiaRequests extends Middleware
             'info' => function () use ($request) {
                 return $request->session()->get('info');
             },
+            'category' => function () use($request) {
+                return Category::withCount('product')->get();
+            }
         ]);
     }
 }
