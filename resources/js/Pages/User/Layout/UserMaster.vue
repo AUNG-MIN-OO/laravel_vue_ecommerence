@@ -20,19 +20,21 @@
                             <inertia-link class="nav-link" href="#">Your Order</inertia-link>
                         </li>
                         <li class="nav-item dropdown">
-                            <inertia-link class="nav-link dropdown-toggle" href="#"
+                            <a class="nav-link dropdown-toggle" href="#"
                                id="navbarDropdown"
-                               role="button" data-toggle="dropdown"
-                               aria-haspopup="true"
+                               role="button" data-toggle="dropdown" aria-haspopup="true"
                                aria-expanded="false">
                                 User
-                            </inertia-link>
-                            <div class="dropdown-menu"
-                                 aria-labelledby="navbarDropdown">
-                                <inertia-link class="dropdown-item" href="#">Login</inertia-link>
-                                <inertia-link class="dropdown-item" href="#">Register</inertia-link>
-                                <div class="dropdown-divider"></div>
-                                <inertia-link class="dropdown-item" href="#">Welcome Guy!</inertia-link>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div v-if="$page.props.auth == null">
+                                    <inertia-link :href="`/login`" class="dropdown-item">Login</inertia-link>
+                                    <inertia-link :href="`/register`" class="dropdown-item">Register</inertia-link>
+                                </div>
+                                <div v-if="$page.props.auth !== null">
+                                    <a class="dropdown-item" href="#">Welcome {{$page.props.auth.name}}!</a>
+                                    <inertia-link :href="`/logout`" class="dropdown-item text-danger" href="#">Logout</inertia-link>
+                                </div>
                             </div>
                         </li>
                         <li class="nav-item">
@@ -67,13 +69,15 @@
                             nisi totam
                             temporibus dolorem!
                         </p>
-                        <inertia-link href="" class="btn btn-outline-primary">SignUp</inertia-link>
-                        <inertia-link href="" class="btn btn-primary">Login</inertia-link>
+                        <div v-if="$page.props.auth == null">
+                            <inertia-link :href="`/register`" class="btn btn-outline-primary">SignUp</inertia-link>
+                            <inertia-link :href="`/login`" class="btn btn-primary">Login</inertia-link>
+                        </div>
                     </div>
                     <div class="col-md-6 text-center">
                         <img class=""
                              src="https://wp.xpeedstudio.com/seocify/home-fifteen/wp-content/uploads/sites/27/2020/03/home17-banner-image-min.png"
-                             alt="">
+                             alt="" style="height: 300px;">
                     </div>
                 </div>
             </div>
@@ -92,6 +96,11 @@
                                 <li class="list-group-item bg-danger text-white">
                                     Your Profile Info
                                 </li>
+                                <div v-if="$page.props.auth !== null">
+                                    <inertia-link :href="`/logout`" class="list-group-item bg-warning text-white">
+                                        Logout <i class="fas fa-arrow-right-from-bracket ml-3"></i>
+                                    </inertia-link>
+                                </div>
                             </ul>
                         </div>
                     </div>
@@ -134,6 +143,16 @@ export default {
     methods:{
         search(){
             this.$inertia.get('/product/search/'+this.keyword);
+        }
+    },
+    created() {
+        const {success, info, error} = this.$page.props;
+        if (success){
+            this.$toastr.s(success);
+        }else if (info){
+            this.$toastr.i(info);
+        }else{
+            this.$toastr.e(error);
         }
     }
 }

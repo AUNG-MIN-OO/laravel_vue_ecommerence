@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -49,6 +50,9 @@ class HandleInertiaRequests extends Middleware
             },
             'category' => function () use($request) {
                 return Category::withCount('product')->get();
+            },
+            'auth' => function () {
+                return Auth::user() ? Auth::user() : null;
             }
         ]);
     }

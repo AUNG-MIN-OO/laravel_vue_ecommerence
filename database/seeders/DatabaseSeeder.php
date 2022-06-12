@@ -22,7 +22,6 @@ class DatabaseSeeder extends Seeder
             "name" => "Admin",
             "email" => "admin@gmail.com",
             "password" => Hash::make('aungminoo'),
-            "image" => "image/user.png",
             "role" => "admin",
         ]);
 
@@ -30,7 +29,6 @@ class DatabaseSeeder extends Seeder
             "name" => "Kyaw Gyi",
             "email" => "kyawgyi@gmail.com",
             "password" => Hash::make('aungminoo'),
-            "image" => "image/user.png",
         ]);
 
         Category::create([

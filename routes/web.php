@@ -3,6 +3,12 @@
 use Illuminate\Support\Facades\Route;
 
 //User routes
+Route::get('/register','User\AuthController@showRegister');
+Route::post('/register','User\AuthController@register');
+Route::get('/login','User\AuthController@showLogin');
+Route::post('/login','User\AuthController@login');
+Route::get('/logout','User\AuthController@logout');
+
 Route::get('/','User\PageController@index');
 Route::get('/product/detail/{slug}','User\PageController@productDetail');
 Route::get('/product/category/{slug}','User\PageController@productByCategory');
